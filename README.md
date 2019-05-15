@@ -4,38 +4,27 @@ This project is a C++ program written in Atmel Studio environment and compiled b
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ## Author
 * **Mohammad Yousefi** - *Initial work* - [vahidyou](https://github.com/vahidyou)
-## Test Project
-I made a simple circuit to test this program.
-![ASK Remote Controls Decoder](Test%20Circuit/ASKRmtCntrlDcdr_bb.png)
-![ASK Remote Controls Decoder](Test%20Circuit/ASKRmtCntrlDcdr_schem.png)
-The microcontroller is configured to run by 1MHz internal RC oscillator.
-The *Test Project* works in 4 modes:
-**1. Normal mode (PB0:H, PB1:H, PB2:H) [LED of PB3 is off]:** When pressing any key on the remote control, the data will be sent to the UART and if the remote control has already saved, the key code will be displayed by LEDs on pins PC0 to PC3.
-**2. Add mode (PB0:L, PB1:H, PB2:H) [LED of PB3 is on]:** The remote control will be saved by pressing key 1 or A. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART and the key code will be displayed by LEDs on pins PC0 to PC3.
-**3. Remove mode (PB0:H, PB1:L, PB2:H) [LED of PB3 is blinking]:** The remote control will be removed by pressing any key. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART.  
-**4. Delete All mode (PB0: H, PB1: H , PB2: L):** All saved remote controls will be removed by making PB2 low for a short time. After a successful operation LED on PB3 will blink fast 10 times.
-Modes 1-3 can be selected by 2 switches. Mode 4 is just a momentary mode.
 ## Preparing for Usage
-This program is written for ATmega8A microcontoller but you can use it for any AVR microcontoller just by a littles changes in the code.
+This program is written for ATmega8A microcontroller but you can use it for any AVR microcontroller just by little changes in the code.
 The program uses INT0 extrenal interrupt pin as the input pin for the signals. So you must set this pin to input and enable its interrupt for both raing and falling edges.
-``
+```
 DDRD  = 0bxxxxx0xx;
 MCUCR = (1 << ISC00);
 GICR  = (1 << INT0);
-``
+```
 Timer1 is used for measuring the signals so you must enable its overflow interrupt.
-``
+```
 TIMSK = (1 << TOIE1);
-``
+```
 Open the file *ASKRemoteControlDecoder.h* and adjust EEPROM start and end address for saving remote controls if you want to use this featyre in your program. Not that each remote control requires 3 bytes.
-``
+```
 #define ASKRmt_EEPROM_START 0
 #define ASKRmt_EEPROM_END  59
-``
+```
 Include *ASKRemoteControlDecoder.h* to your program and use variables and functions starting with `ASKRmt_`.
-``
+```
 #include "PATH/ASKRemoteControlDecoder.h"
-``
+```
 ## Variables and Functions
 /* If this variable is true and the received data remote control code is not saved to
    the EEPROM, the data will be discarded automatically. */
@@ -138,3 +127,15 @@ void ASKRmt_DeleteAllRemotes(void);
    code array. 
    This function returns false if the index is out of range. */
 bool ASKRmt_GetRemoteCodeByIndex(uint8_t index, uint8_t *code);
+
+## Test Project
+I made a simple circuit to test this program.
+![ASK Remote Controls Decoder](Test%20Circuit/ASKRmtCntrlDcdr_bb.png)
+![ASK Remote Controls Decoder](Test%20Circuit/ASKRmtCntrlDcdr_schem.png)
+The microcontroller is configured to run by 1MHz internal RC oscillator.
+The *Test Project* works in 4 modes:
+**1. Normal mode (PB0:H, PB1:H, PB2:H) [LED of PB3 is off]:** When pressing any key on the remote control, the data will be sent to the UART and if the remote control has already saved, the key code will be displayed by LEDs on pins PC0 to PC3.
+**2. Add mode (PB0:L, PB1:H, PB2:H) [LED of PB3 is on]:** The remote control will be saved by pressing key 1 or A. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART and the key code will be displayed by LEDs on pins PC0 to PC3.
+**3. Remove mode (PB0:H, PB1:L, PB2:H) [LED of PB3 is blinking]:** The remote control will be removed by pressing any key. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART.  
+**4. Delete All mode (PB0: H, PB1: H , PB2: L):** All saved remote controls will be removed by making PB2 low for a short time. After a successful operation LED on PB3 will blink fast 10 times.
+Modes 1-3 can be selected by 2 switches. Mode 4 is just a momentary mode.
