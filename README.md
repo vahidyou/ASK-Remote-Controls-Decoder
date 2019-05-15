@@ -11,11 +11,11 @@ The program uses INT0 extrenal interrupt pin as the input pin for the signals. S
 DDRD  = 0bxxxxx0xx;
 MCUCR = (1 << ISC00);
 GICR  = (1 << INT0);
-```C++
+```
 Timer1 is used for measuring the signals so you must enable its overflow interrupt.
 ```C++
 TIMSK = (1 << TOIE1);
-```C++
+```
 Open the file *ASKRemoteControlDecoder.h* and adjust EEPROM start and end address for saving remote controls if you want to use this featyre in your program. Not that each remote control requires 3 bytes.
 ```C++
 #define ASKRmt_EEPROM_START 0
