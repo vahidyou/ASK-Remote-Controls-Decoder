@@ -136,6 +136,6 @@ The microcontroller is configured to run by 1MHz internal RC oscillator.
 The *Test Project* works in 4 modes:
 **1. Normal mode (PB0:H, PB1:H, PB2:H) [LED of PB3 is off]:** When pressing any key on the remote control, the data will be sent to the UART and if the remote control has already saved, the key code will be displayed by LEDs on pins PC0 to PC3.
 **2. Add mode (PB0:L, PB1:H, PB2:H) [LED of PB3 is on]:** The remote control will be saved by pressing key 1 or A. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART and the key code will be displayed by LEDs on pins PC0 to PC3.
-**3. Remove mode (PB0:H, PB1:L, PB2:H) [LED of PB3 is blinking]:** The remote control will be removed by pressing any key. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART.  
+**3. Remove mode (PB0:H, PB1:L, PB2:H) [LED of PB3 is blinking]:** The remote control will be removed by pressing any key. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART.
 **4. Delete All mode (PB0: H, PB1: H , PB2: L):** All saved remote controls will be removed by making PB2 low for a short time. After a successful operation LED on PB3 will blink fast 10 times.
 Modes 1-3 can be selected by 2 switches. Mode 4 is just a momentary mode.
