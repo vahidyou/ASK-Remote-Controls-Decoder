@@ -7,22 +7,22 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Preparing for Usage
 This program is written for ATmega8A microcontroller but you can use it for any AVR microcontroller just by little changes in the code.
 The program uses INT0 extrenal interrupt pin as the input pin for the signals. So you must set this pin to input and enable its interrupt for both raing and falling edges.
-```
+```C++
 DDRD  = 0bxxxxx0xx;
 MCUCR = (1 << ISC00);
 GICR  = (1 << INT0);
-```
+```C++
 Timer1 is used for measuring the signals so you must enable its overflow interrupt.
-```
+```C++
 TIMSK = (1 << TOIE1);
-```
+```C++
 Open the file *ASKRemoteControlDecoder.h* and adjust EEPROM start and end address for saving remote controls if you want to use this featyre in your program. Not that each remote control requires 3 bytes.
-```
+```C++
 #define ASKRmt_EEPROM_START 0
 #define ASKRmt_EEPROM_END  59
 ```
 Include *ASKRemoteControlDecoder.h* to your program and use variables and functions starting with `ASKRmt_`.
-```
+```C++
 #include "PATH/ASKRemoteControlDecoder.h"
 ```
 ## Variables and Functions
