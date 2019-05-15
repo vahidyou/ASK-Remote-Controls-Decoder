@@ -1,32 +1,25 @@
-# Prerequisites
-*.d
+#Atmel Studio Build Directories
+#[Dd]ebug/
+#[Rr]elease/
 
-# Compiled Object files
-*.slo
-*.lo
+#Atmel Studio Build Results
 *.o
-*.obj
+*.d
+#*.eep
+#*.elf
+#*.hex
+*.lss
+*.map
+*.srec
+*.mk
+Makefile
 
-# Precompiled Headers
-*.gch
-*.pch
+#Atmel Studio User Specific Files
+*.atsuo
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Windows files
+Thumbs.db
+Desktop.ini
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+# Mac files
+.DS_Store
