@@ -1,0 +1,626 @@
+
+ASKRmtCtrlDcdr.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000004fa  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000002  00800060  000004fa  0000058e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          0000000c  00800062  00800062  00000590  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000590  2**0
+                  CONTENTS, READONLY
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	6a c0       	rjmp	.+212    	; 0xd8 <__vector_1>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	1e c1       	rjmp	.+572    	; 0x24e <__vector_8>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	ea ef       	ldi	r30, 0xFA	; 250
+  3a:	f4 e0       	ldi	r31, 0x04	; 4
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a2 36       	cpi	r26, 0x62	; 98
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+
+00000048 <__do_clear_bss>:
+  48:	20 e0       	ldi	r18, 0x00	; 0
+  4a:	a2 e6       	ldi	r26, 0x62	; 98
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	ae 36       	cpi	r26, 0x6E	; 110
+  54:	b2 07       	cpc	r27, r18
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	e2 d1       	rcall	.+964    	; 0x41e <main>
+  5a:	4d c2       	rjmp	.+1178   	; 0x4f6 <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <_Z18CheckIsRemoteSavedv>:
+  5e:	1f 93       	push	r17
+  60:	cf 93       	push	r28
+  62:	df 93       	push	r29
+  64:	10 92 65 00 	sts	0x0065, r1
+  68:	10 92 64 00 	sts	0x0064, r1
+  6c:	c0 91 64 00 	lds	r28, 0x0064
+  70:	d0 91 65 00 	lds	r29, 0x0065
+  74:	cb 33       	cpi	r28, 0x3B	; 59
+  76:	d1 05       	cpc	r29, r1
+  78:	40 f5       	brcc	.+80     	; 0xca <_Z18CheckIsRemoteSavedv+0x6c>
+  7a:	ce 01       	movw	r24, r28
+  7c:	02 96       	adiw	r24, 0x02	; 2
+  7e:	26 d2       	rcall	.+1100   	; 0x4cc <__eerd_byte_m8a>
+  80:	18 2f       	mov	r17, r24
+  82:	8f 3f       	cpi	r24, 0xFF	; 255
+  84:	e1 f0       	breq	.+56     	; 0xbe <_Z18CheckIsRemoteSavedv+0x60>
+  86:	ce 01       	movw	r24, r28
+  88:	21 d2       	rcall	.+1090   	; 0x4cc <__eerd_byte_m8a>
+  8a:	90 91 67 00 	lds	r25, 0x0067
+  8e:	89 13       	cpse	r24, r25
+  90:	16 c0       	rjmp	.+44     	; 0xbe <_Z18CheckIsRemoteSavedv+0x60>
+  92:	ce 01       	movw	r24, r28
+  94:	01 96       	adiw	r24, 0x01	; 1
+  96:	1a d2       	rcall	.+1076   	; 0x4cc <__eerd_byte_m8a>
+  98:	90 91 68 00 	lds	r25, 0x0068
+  9c:	89 13       	cpse	r24, r25
+  9e:	0f c0       	rjmp	.+30     	; 0xbe <_Z18CheckIsRemoteSavedv+0x60>
+  a0:	81 2f       	mov	r24, r17
+  a2:	81 70       	andi	r24, 0x01	; 1
+  a4:	80 93 63 00 	sts	0x0063, r24
+  a8:	81 11       	cpse	r24, r1
+  aa:	11 c0       	rjmp	.+34     	; 0xce <_Z18CheckIsRemoteSavedv+0x70>
+  ac:	20 91 69 00 	lds	r18, 0x0069
+  b0:	81 2f       	mov	r24, r17
+  b2:	90 e0       	ldi	r25, 0x00	; 0
+  b4:	20 7f       	andi	r18, 0xF0	; 240
+  b6:	30 e0       	ldi	r19, 0x00	; 0
+  b8:	82 17       	cp	r24, r18
+  ba:	93 07       	cpc	r25, r19
+  bc:	41 f0       	breq	.+16     	; 0xce <_Z18CheckIsRemoteSavedv+0x70>
+  be:	23 96       	adiw	r28, 0x03	; 3
+  c0:	d0 93 65 00 	sts	0x0065, r29
+  c4:	c0 93 64 00 	sts	0x0064, r28
+  c8:	d1 cf       	rjmp	.-94     	; 0x6c <_Z18CheckIsRemoteSavedv+0xe>
+  ca:	80 e0       	ldi	r24, 0x00	; 0
+  cc:	01 c0       	rjmp	.+2      	; 0xd0 <_Z18CheckIsRemoteSavedv+0x72>
+  ce:	81 e0       	ldi	r24, 0x01	; 1
+  d0:	df 91       	pop	r29
+  d2:	cf 91       	pop	r28
+  d4:	1f 91       	pop	r17
+  d6:	08 95       	ret
+
+000000d8 <__vector_1>:
+  d8:	1f 92       	push	r1
+  da:	0f 92       	push	r0
+  dc:	0f b6       	in	r0, 0x3f	; 63
+  de:	0f 92       	push	r0
+  e0:	11 24       	eor	r1, r1
+  e2:	2f 93       	push	r18
+  e4:	3f 93       	push	r19
+  e6:	4f 93       	push	r20
+  e8:	5f 93       	push	r21
+  ea:	6f 93       	push	r22
+  ec:	7f 93       	push	r23
+  ee:	8f 93       	push	r24
+  f0:	9f 93       	push	r25
+  f2:	af 93       	push	r26
+  f4:	bf 93       	push	r27
+  f6:	ef 93       	push	r30
+  f8:	ff 93       	push	r31
+  fa:	80 91 66 00 	lds	r24, 0x0066
+  fe:	81 11       	cpse	r24, r1
+ 100:	95 c0       	rjmp	.+298    	; 0x22c <__vector_1+0x154>
+ 102:	8c b5       	in	r24, 0x2c	; 44
+ 104:	9d b5       	in	r25, 0x2d	; 45
+ 106:	1d bc       	out	0x2d, r1	; 45
+ 108:	1c bc       	out	0x2c, r1	; 44
+ 10a:	82 9b       	sbis	0x10, 2	; 16
+ 10c:	8b c0       	rjmp	.+278    	; 0x224 <__vector_1+0x14c>
+ 10e:	90 93 6b 00 	sts	0x006B, r25
+ 112:	80 93 6a 00 	sts	0x006A, r24
+ 116:	60 91 61 00 	lds	r22, 0x0061
+ 11a:	68 31       	cpi	r22, 0x18	; 24
+ 11c:	e0 f5       	brcc	.+120    	; 0x196 <__vector_1+0xbe>
+ 11e:	20 91 6c 00 	lds	r18, 0x006C
+ 122:	30 91 6d 00 	lds	r19, 0x006D
+ 126:	ac 01       	movw	r20, r24
+ 128:	44 0f       	add	r20, r20
+ 12a:	55 1f       	adc	r21, r21
+ 12c:	42 17       	cp	r20, r18
+ 12e:	53 07       	cpc	r21, r19
+ 130:	00 f5       	brcc	.+64     	; 0x172 <__vector_1+0x9a>
+ 132:	ac 01       	movw	r20, r24
+ 134:	44 0f       	add	r20, r20
+ 136:	55 1f       	adc	r21, r21
+ 138:	44 0f       	add	r20, r20
+ 13a:	55 1f       	adc	r21, r21
+ 13c:	24 17       	cp	r18, r20
+ 13e:	35 07       	cpc	r19, r21
+ 140:	c0 f4       	brcc	.+48     	; 0x172 <__vector_1+0x9a>
+ 142:	e6 2f       	mov	r30, r22
+ 144:	e6 95       	lsr	r30
+ 146:	e6 95       	lsr	r30
+ 148:	e6 95       	lsr	r30
+ 14a:	f0 e0       	ldi	r31, 0x00	; 0
+ 14c:	e9 59       	subi	r30, 0x99	; 153
+ 14e:	ff 4f       	sbci	r31, 0xFF	; 255
+ 150:	40 81       	ld	r20, Z
+ 152:	86 2f       	mov	r24, r22
+ 154:	90 e0       	ldi	r25, 0x00	; 0
+ 156:	80 95       	com	r24
+ 158:	90 95       	com	r25
+ 15a:	87 70       	andi	r24, 0x07	; 7
+ 15c:	99 27       	eor	r25, r25
+ 15e:	21 e0       	ldi	r18, 0x01	; 1
+ 160:	30 e0       	ldi	r19, 0x00	; 0
+ 162:	08 2e       	mov	r0, r24
+ 164:	01 c0       	rjmp	.+2      	; 0x168 <__vector_1+0x90>
+ 166:	22 0f       	add	r18, r18
+ 168:	0a 94       	dec	r0
+ 16a:	ea f7       	brpl	.-6      	; 0x166 <__vector_1+0x8e>
+ 16c:	42 2b       	or	r20, r18
+ 16e:	40 83       	st	Z, r20
+ 170:	12 c0       	rjmp	.+36     	; 0x196 <__vector_1+0xbe>
+ 172:	a9 01       	movw	r20, r18
+ 174:	44 0f       	add	r20, r20
+ 176:	55 1f       	adc	r21, r21
+ 178:	48 17       	cp	r20, r24
+ 17a:	59 07       	cpc	r21, r25
+ 17c:	48 f4       	brcc	.+18     	; 0x190 <__vector_1+0xb8>
+ 17e:	22 0f       	add	r18, r18
+ 180:	33 1f       	adc	r19, r19
+ 182:	22 0f       	add	r18, r18
+ 184:	33 1f       	adc	r19, r19
+ 186:	82 17       	cp	r24, r18
+ 188:	93 07       	cpc	r25, r19
+ 18a:	10 f4       	brcc	.+4      	; 0x190 <__vector_1+0xb8>
+ 18c:	00 00       	nop
+ 18e:	03 c0       	rjmp	.+6      	; 0x196 <__vector_1+0xbe>
+ 190:	8d ef       	ldi	r24, 0xFD	; 253
+ 192:	80 93 61 00 	sts	0x0061, r24
+ 196:	80 91 61 00 	lds	r24, 0x0061
+ 19a:	8f 3f       	cpi	r24, 0xFF	; 255
+ 19c:	21 f5       	brne	.+72     	; 0x1e6 <__vector_1+0x10e>
+ 19e:	80 91 6a 00 	lds	r24, 0x006A
+ 1a2:	90 91 6b 00 	lds	r25, 0x006B
+ 1a6:	20 91 6c 00 	lds	r18, 0x006C
+ 1aa:	30 91 6d 00 	lds	r19, 0x006D
+ 1ae:	6b e1       	ldi	r22, 0x1B	; 27
+ 1b0:	62 9f       	mul	r22, r18
+ 1b2:	a0 01       	movw	r20, r0
+ 1b4:	63 9f       	mul	r22, r19
+ 1b6:	50 0d       	add	r21, r0
+ 1b8:	11 24       	eor	r1, r1
+ 1ba:	48 17       	cp	r20, r24
+ 1bc:	59 07       	cpc	r21, r25
+ 1be:	80 f4       	brcc	.+32     	; 0x1e0 <__vector_1+0x108>
+ 1c0:	61 e2       	ldi	r22, 0x21	; 33
+ 1c2:	62 9f       	mul	r22, r18
+ 1c4:	a0 01       	movw	r20, r0
+ 1c6:	63 9f       	mul	r22, r19
+ 1c8:	50 0d       	add	r21, r0
+ 1ca:	11 24       	eor	r1, r1
+ 1cc:	84 17       	cp	r24, r20
+ 1ce:	95 07       	cpc	r25, r21
+ 1d0:	38 f4       	brcc	.+14     	; 0x1e0 <__vector_1+0x108>
+ 1d2:	10 92 67 00 	sts	0x0067, r1
+ 1d6:	10 92 68 00 	sts	0x0068, r1
+ 1da:	10 92 69 00 	sts	0x0069, r1
+ 1de:	03 c0       	rjmp	.+6      	; 0x1e6 <__vector_1+0x10e>
+ 1e0:	8d ef       	ldi	r24, 0xFD	; 253
+ 1e2:	80 93 61 00 	sts	0x0061, r24
+ 1e6:	80 91 61 00 	lds	r24, 0x0061
+ 1ea:	8e 3f       	cpi	r24, 0xFE	; 254
+ 1ec:	11 f4       	brne	.+4      	; 0x1f2 <__vector_1+0x11a>
+ 1ee:	81 e0       	ldi	r24, 0x01	; 1
+ 1f0:	8e bd       	out	0x2e, r24	; 46
+ 1f2:	80 91 61 00 	lds	r24, 0x0061
+ 1f6:	8f 5f       	subi	r24, 0xFF	; 255
+ 1f8:	80 93 61 00 	sts	0x0061, r24
+ 1fc:	88 31       	cpi	r24, 0x18	; 24
+ 1fe:	b1 f4       	brne	.+44     	; 0x22c <__vector_1+0x154>
+ 200:	81 e0       	ldi	r24, 0x01	; 1
+ 202:	80 93 66 00 	sts	0x0066, r24
+ 206:	8e ef       	ldi	r24, 0xFE	; 254
+ 208:	80 93 61 00 	sts	0x0061, r24
+ 20c:	10 92 62 00 	sts	0x0062, r1
+ 210:	80 91 60 00 	lds	r24, 0x0060
+ 214:	88 23       	and	r24, r24
+ 216:	51 f0       	breq	.+20     	; 0x22c <__vector_1+0x154>
+ 218:	22 df       	rcall	.-444    	; 0x5e <_Z18CheckIsRemoteSavedv>
+ 21a:	80 93 62 00 	sts	0x0062, r24
+ 21e:	80 93 66 00 	sts	0x0066, r24
+ 222:	04 c0       	rjmp	.+8      	; 0x22c <__vector_1+0x154>
+ 224:	90 93 6d 00 	sts	0x006D, r25
+ 228:	80 93 6c 00 	sts	0x006C, r24
+ 22c:	ff 91       	pop	r31
+ 22e:	ef 91       	pop	r30
+ 230:	bf 91       	pop	r27
+ 232:	af 91       	pop	r26
+ 234:	9f 91       	pop	r25
+ 236:	8f 91       	pop	r24
+ 238:	7f 91       	pop	r23
+ 23a:	6f 91       	pop	r22
+ 23c:	5f 91       	pop	r21
+ 23e:	4f 91       	pop	r20
+ 240:	3f 91       	pop	r19
+ 242:	2f 91       	pop	r18
+ 244:	0f 90       	pop	r0
+ 246:	0f be       	out	0x3f, r0	; 63
+ 248:	0f 90       	pop	r0
+ 24a:	1f 90       	pop	r1
+ 24c:	18 95       	reti
+
+0000024e <__vector_8>:
+ 24e:	1f 92       	push	r1
+ 250:	0f 92       	push	r0
+ 252:	0f b6       	in	r0, 0x3f	; 63
+ 254:	0f 92       	push	r0
+ 256:	11 24       	eor	r1, r1
+ 258:	1e bc       	out	0x2e, r1	; 46
+ 25a:	0f 90       	pop	r0
+ 25c:	0f be       	out	0x3f, r0	; 63
+ 25e:	0f 90       	pop	r0
+ 260:	1f 90       	pop	r1
+ 262:	18 95       	reti
+
+00000264 <_Z21ASKRmt_IsDataReceivedv>:
+ 264:	80 91 66 00 	lds	r24, 0x0066
+ 268:	08 95       	ret
+
+0000026a <_Z14ASKRmt_GetDataPh>:
+ 26a:	fc 01       	movw	r30, r24
+ 26c:	80 91 66 00 	lds	r24, 0x0066
+ 270:	88 23       	and	r24, r24
+ 272:	59 f0       	breq	.+22     	; 0x28a <_Z14ASKRmt_GetDataPh+0x20>
+ 274:	80 91 67 00 	lds	r24, 0x0067
+ 278:	80 83       	st	Z, r24
+ 27a:	80 91 68 00 	lds	r24, 0x0068
+ 27e:	81 83       	std	Z+1, r24	; 0x01
+ 280:	80 91 69 00 	lds	r24, 0x0069
+ 284:	82 83       	std	Z+2, r24	; 0x02
+ 286:	81 e0       	ldi	r24, 0x01	; 1
+ 288:	08 95       	ret
+ 28a:	80 e0       	ldi	r24, 0x00	; 0
+ 28c:	08 95       	ret
+
+0000028e <_Z13GetFixCodeKeyv>:
+ 28e:	e9 e6       	ldi	r30, 0x69	; 105
+ 290:	f0 e0       	ldi	r31, 0x00	; 0
+ 292:	80 81       	ld	r24, Z
+ 294:	20 81       	ld	r18, Z
+ 296:	30 e0       	ldi	r19, 0x00	; 0
+ 298:	35 95       	asr	r19
+ 29a:	27 95       	ror	r18
+ 29c:	23 70       	andi	r18, 0x03	; 3
+ 29e:	86 95       	lsr	r24
+ 2a0:	86 95       	lsr	r24
+ 2a2:	86 95       	lsr	r24
+ 2a4:	8c 70       	andi	r24, 0x0C	; 12
+ 2a6:	82 2b       	or	r24, r18
+ 2a8:	08 95       	ret
+
+000002aa <_Z27ASKRmt_PickKeyIfRemoteSavedv>:
+ 2aa:	80 91 66 00 	lds	r24, 0x0066
+ 2ae:	88 23       	and	r24, r24
+ 2b0:	c9 f0       	breq	.+50     	; 0x2e4 <_Z27ASKRmt_PickKeyIfRemoteSavedv+0x3a>
+ 2b2:	80 91 62 00 	lds	r24, 0x0062
+ 2b6:	81 11       	cpse	r24, r1
+ 2b8:	03 c0       	rjmp	.+6      	; 0x2c0 <_Z27ASKRmt_PickKeyIfRemoteSavedv+0x16>
+ 2ba:	d1 de       	rcall	.-606    	; 0x5e <_Z18CheckIsRemoteSavedv>
+ 2bc:	80 93 62 00 	sts	0x0062, r24
+ 2c0:	80 91 62 00 	lds	r24, 0x0062
+ 2c4:	88 23       	and	r24, r24
+ 2c6:	61 f0       	breq	.+24     	; 0x2e0 <_Z27ASKRmt_PickKeyIfRemoteSavedv+0x36>
+ 2c8:	80 91 63 00 	lds	r24, 0x0063
+ 2cc:	88 23       	and	r24, r24
+ 2ce:	11 f0       	breq	.+4      	; 0x2d4 <_Z27ASKRmt_PickKeyIfRemoteSavedv+0x2a>
+ 2d0:	de df       	rcall	.-68     	; 0x28e <_Z13GetFixCodeKeyv>
+ 2d2:	03 c0       	rjmp	.+6      	; 0x2da <_Z27ASKRmt_PickKeyIfRemoteSavedv+0x30>
+ 2d4:	80 91 69 00 	lds	r24, 0x0069
+ 2d8:	8f 70       	andi	r24, 0x0F	; 15
+ 2da:	10 92 66 00 	sts	0x0066, r1
+ 2de:	08 95       	ret
+ 2e0:	10 92 66 00 	sts	0x0066, r1
+ 2e4:	8f ef       	ldi	r24, 0xFF	; 255
+ 2e6:	08 95       	ret
+
+000002e8 <_Z10SaveRemoteb>:
+ 2e8:	1f 93       	push	r17
+ 2ea:	cf 93       	push	r28
+ 2ec:	df 93       	push	r29
+ 2ee:	18 2f       	mov	r17, r24
+ 2f0:	10 92 65 00 	sts	0x0065, r1
+ 2f4:	10 92 64 00 	sts	0x0064, r1
+ 2f8:	c0 91 64 00 	lds	r28, 0x0064
+ 2fc:	d0 91 65 00 	lds	r29, 0x0065
+ 300:	cb 33       	cpi	r28, 0x3B	; 59
+ 302:	d1 05       	cpc	r29, r1
+ 304:	30 f5       	brcc	.+76     	; 0x352 <_Z10SaveRemoteb+0x6a>
+ 306:	ce 01       	movw	r24, r28
+ 308:	02 96       	adiw	r24, 0x02	; 2
+ 30a:	e0 d0       	rcall	.+448    	; 0x4cc <__eerd_byte_m8a>
+ 30c:	8f 3f       	cpi	r24, 0xFF	; 255
+ 30e:	d9 f4       	brne	.+54     	; 0x346 <_Z10SaveRemoteb+0x5e>
+ 310:	60 91 67 00 	lds	r22, 0x0067
+ 314:	ce 01       	movw	r24, r28
+ 316:	e2 d0       	rcall	.+452    	; 0x4dc <__eewr_byte_m8a>
+ 318:	60 91 68 00 	lds	r22, 0x0068
+ 31c:	80 91 64 00 	lds	r24, 0x0064
+ 320:	90 91 65 00 	lds	r25, 0x0065
+ 324:	01 96       	adiw	r24, 0x01	; 1
+ 326:	da d0       	rcall	.+436    	; 0x4dc <__eewr_byte_m8a>
+ 328:	80 91 64 00 	lds	r24, 0x0064
+ 32c:	90 91 65 00 	lds	r25, 0x0065
+ 330:	11 23       	and	r17, r17
+ 332:	11 f0       	breq	.+4      	; 0x338 <_Z10SaveRemoteb+0x50>
+ 334:	61 e0       	ldi	r22, 0x01	; 1
+ 336:	03 c0       	rjmp	.+6      	; 0x33e <_Z10SaveRemoteb+0x56>
+ 338:	60 91 69 00 	lds	r22, 0x0069
+ 33c:	60 7f       	andi	r22, 0xF0	; 240
+ 33e:	02 96       	adiw	r24, 0x02	; 2
+ 340:	cd d0       	rcall	.+410    	; 0x4dc <__eewr_byte_m8a>
+ 342:	81 e0       	ldi	r24, 0x01	; 1
+ 344:	07 c0       	rjmp	.+14     	; 0x354 <_Z10SaveRemoteb+0x6c>
+ 346:	23 96       	adiw	r28, 0x03	; 3
+ 348:	d0 93 65 00 	sts	0x0065, r29
+ 34c:	c0 93 64 00 	sts	0x0064, r28
+ 350:	d3 cf       	rjmp	.-90     	; 0x2f8 <_Z10SaveRemoteb+0x10>
+ 352:	80 e0       	ldi	r24, 0x00	; 0
+ 354:	df 91       	pop	r29
+ 356:	cf 91       	pop	r28
+ 358:	1f 91       	pop	r17
+ 35a:	08 95       	ret
+
+0000035c <_Z31ASKRmt_SaveRemoteAutoDetectTypev>:
+ 35c:	80 91 66 00 	lds	r24, 0x0066
+ 360:	88 23       	and	r24, r24
+ 362:	c9 f0       	breq	.+50     	; 0x396 <_Z31ASKRmt_SaveRemoteAutoDetectTypev+0x3a>
+ 364:	80 91 62 00 	lds	r24, 0x0062
+ 368:	81 11       	cpse	r24, r1
+ 36a:	03 c0       	rjmp	.+6      	; 0x372 <_Z31ASKRmt_SaveRemoteAutoDetectTypev+0x16>
+ 36c:	78 de       	rcall	.-784    	; 0x5e <_Z18CheckIsRemoteSavedv>
+ 36e:	80 93 62 00 	sts	0x0062, r24
+ 372:	80 91 62 00 	lds	r24, 0x0062
+ 376:	81 11       	cpse	r24, r1
+ 378:	0e c0       	rjmp	.+28     	; 0x396 <_Z31ASKRmt_SaveRemoteAutoDetectTypev+0x3a>
+ 37a:	80 91 69 00 	lds	r24, 0x0069
+ 37e:	8f 70       	andi	r24, 0x0F	; 15
+ 380:	81 30       	cpi	r24, 0x01	; 1
+ 382:	11 f4       	brne	.+4      	; 0x388 <_Z31ASKRmt_SaveRemoteAutoDetectTypev+0x2c>
+ 384:	80 e0       	ldi	r24, 0x00	; 0
+ 386:	06 c0       	rjmp	.+12     	; 0x394 <_Z31ASKRmt_SaveRemoteAutoDetectTypev+0x38>
+ 388:	80 91 69 00 	lds	r24, 0x0069
+ 38c:	8f 70       	andi	r24, 0x0F	; 15
+ 38e:	83 30       	cpi	r24, 0x03	; 3
+ 390:	11 f4       	brne	.+4      	; 0x396 <_Z31ASKRmt_SaveRemoteAutoDetectTypev+0x3a>
+ 392:	81 e0       	ldi	r24, 0x01	; 1
+ 394:	a9 cf       	rjmp	.-174    	; 0x2e8 <_Z10SaveRemoteb>
+ 396:	80 e0       	ldi	r24, 0x00	; 0
+ 398:	08 95       	ret
+
+0000039a <_Z30ASKRmt_PickDataAndDeleteRemotev>:
+ 39a:	80 91 66 00 	lds	r24, 0x0066
+ 39e:	88 23       	and	r24, r24
+ 3a0:	c1 f0       	breq	.+48     	; 0x3d2 <_Z30ASKRmt_PickDataAndDeleteRemotev+0x38>
+ 3a2:	80 91 62 00 	lds	r24, 0x0062
+ 3a6:	81 11       	cpse	r24, r1
+ 3a8:	03 c0       	rjmp	.+6      	; 0x3b0 <_Z30ASKRmt_PickDataAndDeleteRemotev+0x16>
+ 3aa:	59 de       	rcall	.-846    	; 0x5e <_Z18CheckIsRemoteSavedv>
+ 3ac:	80 93 62 00 	sts	0x0062, r24
+ 3b0:	80 91 62 00 	lds	r24, 0x0062
+ 3b4:	88 23       	and	r24, r24
+ 3b6:	59 f0       	breq	.+22     	; 0x3ce <_Z30ASKRmt_PickDataAndDeleteRemotev+0x34>
+ 3b8:	80 91 64 00 	lds	r24, 0x0064
+ 3bc:	90 91 65 00 	lds	r25, 0x0065
+ 3c0:	6f ef       	ldi	r22, 0xFF	; 255
+ 3c2:	02 96       	adiw	r24, 0x02	; 2
+ 3c4:	8b d0       	rcall	.+278    	; 0x4dc <__eewr_byte_m8a>
+ 3c6:	10 92 66 00 	sts	0x0066, r1
+ 3ca:	81 e0       	ldi	r24, 0x01	; 1
+ 3cc:	08 95       	ret
+ 3ce:	10 92 66 00 	sts	0x0066, r1
+ 3d2:	80 e0       	ldi	r24, 0x00	; 0
+ 3d4:	08 95       	ret
+
+000003d6 <_Z23ASKRmt_DeleteAllRemotesv>:
+ 3d6:	cf 93       	push	r28
+ 3d8:	df 93       	push	r29
+ 3da:	c2 e0       	ldi	r28, 0x02	; 2
+ 3dc:	d0 e0       	ldi	r29, 0x00	; 0
+ 3de:	ce 01       	movw	r24, r28
+ 3e0:	75 d0       	rcall	.+234    	; 0x4cc <__eerd_byte_m8a>
+ 3e2:	8f 3f       	cpi	r24, 0xFF	; 255
+ 3e4:	19 f0       	breq	.+6      	; 0x3ec <_Z23ASKRmt_DeleteAllRemotesv+0x16>
+ 3e6:	6f ef       	ldi	r22, 0xFF	; 255
+ 3e8:	ce 01       	movw	r24, r28
+ 3ea:	78 d0       	rcall	.+240    	; 0x4dc <__eewr_byte_m8a>
+ 3ec:	23 96       	adiw	r28, 0x03	; 3
+ 3ee:	ce 33       	cpi	r28, 0x3E	; 62
+ 3f0:	d1 05       	cpc	r29, r1
+ 3f2:	a9 f7       	brne	.-22     	; 0x3de <_Z23ASKRmt_DeleteAllRemotesv+0x8>
+ 3f4:	df 91       	pop	r29
+ 3f6:	cf 91       	pop	r28
+ 3f8:	08 95       	ret
+
+000003fa <_Z7UART_TXh>:
+ 3fa:	5d 9b       	sbis	0x0b, 5	; 11
+ 3fc:	fe cf       	rjmp	.-4      	; 0x3fa <_Z7UART_TXh>
+ 3fe:	8c b9       	out	0x0c, r24	; 12
+ 400:	08 95       	ret
+
+00000402 <_Z17LEDWorkDoneSignalv>:
+ 402:	84 e1       	ldi	r24, 0x14	; 20
+ 404:	28 e0       	ldi	r18, 0x08	; 8
+ 406:	98 b3       	in	r25, 0x18	; 24
+ 408:	92 27       	eor	r25, r18
+ 40a:	98 bb       	out	0x18, r25	; 24
+ 40c:	e3 ed       	ldi	r30, 0xD3	; 211
+ 40e:	f0 e3       	ldi	r31, 0x30	; 48
+ 410:	31 97       	sbiw	r30, 0x01	; 1
+ 412:	f1 f7       	brne	.-4      	; 0x410 <_Z17LEDWorkDoneSignalv+0xe>
+ 414:	00 c0       	rjmp	.+0      	; 0x416 <_Z17LEDWorkDoneSignalv+0x14>
+ 416:	00 00       	nop
+ 418:	81 50       	subi	r24, 0x01	; 1
+ 41a:	a9 f7       	brne	.-22     	; 0x406 <_Z17LEDWorkDoneSignalv+0x4>
+ 41c:	08 95       	ret
+
+0000041e <main>:
+ 41e:	cf 93       	push	r28
+ 420:	df 93       	push	r29
+ 422:	00 d0       	rcall	.+0      	; 0x424 <main+0x6>
+ 424:	1f 92       	push	r1
+ 426:	cd b7       	in	r28, 0x3d	; 61
+ 428:	de b7       	in	r29, 0x3e	; 62
+ 42a:	47 9a       	sbi	0x08, 7	; 8
+ 42c:	88 ef       	ldi	r24, 0xF8	; 248
+ 42e:	87 bb       	out	0x17, r24	; 23
+ 430:	87 e0       	ldi	r24, 0x07	; 7
+ 432:	88 bb       	out	0x18, r24	; 24
+ 434:	8f e3       	ldi	r24, 0x3F	; 63
+ 436:	84 bb       	out	0x14, r24	; 20
+ 438:	8b ef       	ldi	r24, 0xFB	; 251
+ 43a:	81 bb       	out	0x11, r24	; 17
+ 43c:	81 e0       	ldi	r24, 0x01	; 1
+ 43e:	85 bf       	out	0x35, r24	; 53
+ 440:	80 e4       	ldi	r24, 0x40	; 64
+ 442:	8b bf       	out	0x3b, r24	; 59
+ 444:	84 e0       	ldi	r24, 0x04	; 4
+ 446:	89 bf       	out	0x39, r24	; 57
+ 448:	10 bc       	out	0x20, r1	; 32
+ 44a:	89 e1       	ldi	r24, 0x19	; 25
+ 44c:	89 b9       	out	0x09, r24	; 9
+ 44e:	88 e0       	ldi	r24, 0x08	; 8
+ 450:	8a b9       	out	0x0a, r24	; 10
+ 452:	86 e8       	ldi	r24, 0x86	; 134
+ 454:	80 bd       	out	0x20, r24	; 32
+ 456:	10 92 60 00 	sts	0x0060, r1
+ 45a:	78 94       	sei
+ 45c:	18 e0       	ldi	r17, 0x08	; 8
+ 45e:	b0 99       	sbic	0x16, 0	; 22
+ 460:	08 c0       	rjmp	.+16     	; 0x472 <__stack+0x13>
+ 462:	c3 9a       	sbi	0x18, 3	; 24
+ 464:	ff de       	rcall	.-514    	; 0x264 <_Z21ASKRmt_IsDataReceivedv>
+ 466:	88 23       	and	r24, r24
+ 468:	a1 f0       	breq	.+40     	; 0x492 <__stack+0x33>
+ 46a:	78 df       	rcall	.-272    	; 0x35c <_Z31ASKRmt_SaveRemoteAutoDetectTypev>
+ 46c:	88 23       	and	r24, r24
+ 46e:	89 f0       	breq	.+34     	; 0x492 <__stack+0x33>
+ 470:	0d c0       	rjmp	.+26     	; 0x48c <__stack+0x2d>
+ 472:	b1 99       	sbic	0x16, 1	; 22
+ 474:	08 c0       	rjmp	.+16     	; 0x486 <__stack+0x27>
+ 476:	88 b3       	in	r24, 0x18	; 24
+ 478:	81 27       	eor	r24, r17
+ 47a:	88 bb       	out	0x18, r24	; 24
+ 47c:	f3 de       	rcall	.-538    	; 0x264 <_Z21ASKRmt_IsDataReceivedv>
+ 47e:	88 23       	and	r24, r24
+ 480:	41 f0       	breq	.+16     	; 0x492 <__stack+0x33>
+ 482:	8b df       	rcall	.-234    	; 0x39a <_Z30ASKRmt_PickDataAndDeleteRemotev>
+ 484:	f3 cf       	rjmp	.-26     	; 0x46c <__stack+0xd>
+ 486:	b2 99       	sbic	0x16, 2	; 22
+ 488:	03 c0       	rjmp	.+6      	; 0x490 <__stack+0x31>
+ 48a:	a5 df       	rcall	.-182    	; 0x3d6 <_Z23ASKRmt_DeleteAllRemotesv>
+ 48c:	ba df       	rcall	.-140    	; 0x402 <_Z17LEDWorkDoneSignalv>
+ 48e:	01 c0       	rjmp	.+2      	; 0x492 <__stack+0x33>
+ 490:	c3 98       	cbi	0x18, 3	; 24
+ 492:	ce 01       	movw	r24, r28
+ 494:	01 96       	adiw	r24, 0x01	; 1
+ 496:	e9 de       	rcall	.-558    	; 0x26a <_Z14ASKRmt_GetDataPh>
+ 498:	88 23       	and	r24, r24
+ 49a:	89 f0       	breq	.+34     	; 0x4be <__stack+0x5f>
+ 49c:	89 81       	ldd	r24, Y+1	; 0x01
+ 49e:	ad df       	rcall	.-166    	; 0x3fa <_Z7UART_TXh>
+ 4a0:	8a 81       	ldd	r24, Y+2	; 0x02
+ 4a2:	ab df       	rcall	.-170    	; 0x3fa <_Z7UART_TXh>
+ 4a4:	8b 81       	ldd	r24, Y+3	; 0x03
+ 4a6:	a9 df       	rcall	.-174    	; 0x3fa <_Z7UART_TXh>
+ 4a8:	00 df       	rcall	.-512    	; 0x2aa <_Z27ASKRmt_PickKeyIfRemoteSavedv>
+ 4aa:	87 fd       	sbrc	r24, 7
+ 4ac:	08 c0       	rjmp	.+16     	; 0x4be <__stack+0x5f>
+ 4ae:	85 bb       	out	0x15, r24	; 21
+ 4b0:	8f e4       	ldi	r24, 0x4F	; 79
+ 4b2:	93 ec       	ldi	r25, 0xC3	; 195
+ 4b4:	01 97       	sbiw	r24, 0x01	; 1
+ 4b6:	f1 f7       	brne	.-4      	; 0x4b4 <__stack+0x55>
+ 4b8:	00 c0       	rjmp	.+0      	; 0x4ba <__stack+0x5b>
+ 4ba:	00 00       	nop
+ 4bc:	15 ba       	out	0x15, r1	; 21
+ 4be:	8f e4       	ldi	r24, 0x4F	; 79
+ 4c0:	93 ec       	ldi	r25, 0xC3	; 195
+ 4c2:	01 97       	sbiw	r24, 0x01	; 1
+ 4c4:	f1 f7       	brne	.-4      	; 0x4c2 <__stack+0x63>
+ 4c6:	00 c0       	rjmp	.+0      	; 0x4c8 <__stack+0x69>
+ 4c8:	00 00       	nop
+ 4ca:	c9 cf       	rjmp	.-110    	; 0x45e <main+0x40>
+
+000004cc <__eerd_byte_m8a>:
+ 4cc:	e1 99       	sbic	0x1c, 1	; 28
+ 4ce:	fe cf       	rjmp	.-4      	; 0x4cc <__eerd_byte_m8a>
+ 4d0:	9f bb       	out	0x1f, r25	; 31
+ 4d2:	8e bb       	out	0x1e, r24	; 30
+ 4d4:	e0 9a       	sbi	0x1c, 0	; 28
+ 4d6:	99 27       	eor	r25, r25
+ 4d8:	8d b3       	in	r24, 0x1d	; 29
+ 4da:	08 95       	ret
+
+000004dc <__eewr_byte_m8a>:
+ 4dc:	26 2f       	mov	r18, r22
+
+000004de <__eewr_r18_m8a>:
+ 4de:	e1 99       	sbic	0x1c, 1	; 28
+ 4e0:	fe cf       	rjmp	.-4      	; 0x4de <__eewr_r18_m8a>
+ 4e2:	9f bb       	out	0x1f, r25	; 31
+ 4e4:	8e bb       	out	0x1e, r24	; 30
+ 4e6:	2d bb       	out	0x1d, r18	; 29
+ 4e8:	0f b6       	in	r0, 0x3f	; 63
+ 4ea:	f8 94       	cli
+ 4ec:	e2 9a       	sbi	0x1c, 2	; 28
+ 4ee:	e1 9a       	sbi	0x1c, 1	; 28
+ 4f0:	0f be       	out	0x3f, r0	; 63
+ 4f2:	01 96       	adiw	r24, 0x01	; 1
+ 4f4:	08 95       	ret
+
+000004f6 <_exit>:
+ 4f6:	f8 94       	cli
+
+000004f8 <__stop_program>:
+ 4f8:	ff cf       	rjmp	.-2      	; 0x4f8 <__stop_program>
