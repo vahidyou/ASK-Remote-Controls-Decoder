@@ -39,12 +39,12 @@ Open the file *ASKRemoteControlDecoder.h* and adjust EEPROM start and end positi
 ```
 
 ## Variables and Functions
-Variables and functions of this library start with `ASKRmt_` prefix. Some function will pick or discard the received data and some not. Note that while data is not picked or discarded, new data will not receive.
+Variables and functions of this library start with `ASKRmt_` prefix. Some functions will pick or discard the received data and some not. Note that while data is not picked or discarded, new data will not receive.
 
 ```C++
 extern volatile bool ASKRmt_AutoDiscardUnsavedRemotes;
 ```
-If this variable is true and the received data remote control code is not saved to the EEPROM, the data will be discarded automatically.
+If this variable is true and the received data remote control code is not saved to the EEPROM, the data will be discarded automatically. The default value is true.
 
 ```C++
 bool ASKRmt_IsDataReceived(void);
@@ -79,12 +79,12 @@ Picks the data and returns the key number if valid data is received, otherwise r
 ```C++
 int8_t ASKRmt_GetKeyIfRemoteSaved(void);
 ```
-Returns the key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1. This function will not pick the data.
+Returns the key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1. Type of remote control will be detected automatically. This function will not pick the data.
 
 ```C++
 int8_t ASKRmt_PickKeyIfRemoteSaved(void);
 ```
-Picks the data and returns the key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1.
+Picks the data and returns the key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1. Type of remote control will be detected automatically.
 
 ```C++
 bool ASKRmt_SaveRemote(bool isFixCode);
@@ -129,21 +129,22 @@ Deletes all of the remote controls codes from the EEPROM.
 ```C++
 bool ASKRmt_GetRemoteCodeByIndex(uint8_t index, uint8_t *code);
 ```
-This function reads remote control code from the EEPROM and copies 3 bytes of code to the *code* array. 
+This function reads a remote control code from the EEPROM by index and copies 3 bytes of code to the *code* array. 
 
 ## Test Project
 I made a simple circuit to test this program.
 ![ASK Remote Controls Decoder](Test%20Circuit/ASKRmtCntrlDcdr_bb.png)
 ![ASK Remote Controls Decoder](Test%20Circuit/ASKRmtCntrlDcdr_schem.png)
-The microcontroller is configured to run by 1MHz internal RC oscillator.
+The microcontroller is configured to run by the 1MHz internal RC oscillator.
 
 The *Test Project* works in 4 modes:
 
-  **1. Normal mode (PB0:H, PB1:H, PB2:H) [LED of PB3 is off]:** When pressing any key on the remote control, the data will be sent to the UART and if the remote control has already saved, the key code will be displayed by LEDs on pins PC0 to PC3.
+**1. Normal mode (PB0:H, PB1:H, PB2:H) [LED on PB3 is off]:** When pressing any key on the remote control, the data will be sent to the UART and if the remote control has already saved, the key code will be displayed by LEDs on pins PC0 to PC3.
 
-  **2. Add mode (PB0:L, PB1:H, PB2:H) [LED of PB3 is on]:** The remote control will be saved by pressing key 1 or A. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART and the key code will be displayed by LEDs on pins PC0 to PC3.
+**2. Add mode (PB0:L, PB1:H, PB2:H) [LED on PB3 is on]:** The remote control will be saved by pressing key 1 or A. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART and the key code will be displayed by LEDs on pins PC0 to PC3.
 
-  **3. Remove mode (PB0:H, PB1:L, PB2:H) [LED of PB3 is blinking]:** The remote control will be removed by pressing any key. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART.
+**3. Remove mode (PB0:H, PB1:L, PB2:H) [LED on PB3 is blinking]:** The remote control will be removed by pressing any key. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART.
 
-  **4. Delete All mode (PB0: H, PB1: H , PB2: L):** All saved remote controls will be removed by making PB2 low for a short time. After a successful operation LED on PB3 will blink fast 10 times.
-Modes 1-3 can be selected by 2 switches. Mode 4 is just a momentary mode.
+**4. Delete All mode (PB0: H, PB1: H , PB2: L):** All saved remote controls will be removed by making PB2 low for a short time. After a successful operation LED on PB3 will blink fast 10 times.
+
+Modes 1-3 can be selected by 2 switches. Mode 4 is just a momentary mode activate by pressing the button.
