@@ -19,20 +19,20 @@ The program uses INT0 extrenal interrupt pin as the input pin for the signals. S
 DDRD  = 0bxxxxx0xx;
 MCUCR = (1 << ISC00);
 GICR  = (1 << INT0);
-.
-.
-.
-sei();
 ```
 Timer1 is used for measuring the signals length. So you must enable its overflow interrupt.
 ```C++
 TIMSK = (1 << TOIE1);
 ```
+Don't forget to enable global interrupts by setting the `I` bit of the `SREG`.
+```C++
+sei();
+```
 Open the file *ASKRemoteControlDecoder.h* and adjust the value of TCCR1B register for starting the Timer1. It is better to run the timer at 1MHz. The default value is 1.
 ```C++
 #define ASKRmt_TCCR1B 1
 ```
-Open the file *ASKRemoteControlDecoder.h* and adjust EEPROM start and end address for saving remote controls if you want to use this feature in your program. Note that each remote control requires 3 bytes.
+Open the file *ASKRemoteControlDecoder.h* and adjust EEPROM start and end positions for saving remote controls if you want to use this feature in your program. Note that each remote control requires 3 bytes. By the default values 20 remote controls can be saved into the EEPROM from address 0 to 59.
 ```C++
 #define ASKRmt_EEPROM_START 0
 #define ASKRmt_EEPROM_END  59
