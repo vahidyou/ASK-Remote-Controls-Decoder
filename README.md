@@ -9,6 +9,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Preparing for Usage
 This program is written for ATmega8A microcontroller but you can use it for any AVR microcontroller just by little changes in the code.
+
 Include *ASKRemoteControlDecoder.h* to your program.
 ```C++
 #include "PATH/ASKRemoteControlDecoder.h"
@@ -38,60 +39,96 @@ Open the file *ASKRemoteControlDecoder.h* and adjust EEPROM start and end addres
 ```
 
 ## Variables and Functions
-Variables and functions of the library starts with `ASKRmt_`. Some function will pick or discard the received data and some not. Note that while data is not picked or discarded, new data will not receive.
+Variables and functions of the library start with `ASKRmt_`. Some function will pick or discard the received data and some not. Note that while data is not picked or discarded, new data will not receive.
 
-`extern volatile bool ASKRmt_AutoDiscardUnsavedRemotes;`
+```C++
+extern volatile bool ASKRmt_AutoDiscardUnsavedRemotes;
+```
 If this variable is true and the received data remote control code is not saved to the EEPROM, the data will be discarded automatically.
 
-`bool ASKRmt_IsDataReceived(void);`
+```C++
+bool ASKRmt_IsDataReceived(void);
+```
 Returns true if valid data is received. This function will not pick the data. 
 
-`void ASKRmt_DiscardData(void);`
+```C++
+void ASKRmt_DiscardData(void);
+```
 Discards received data.
 
-`bool ASKRmt_GetData(uint8_t *data);`
+```C++
+bool ASKRmt_GetData(uint8_t *data);
+```
 Reads data and returns true if valid data is received. The received data (3 bytes) will be copied to the data array. This function will not pick the data.
 
-`bool ASKRmt_PickData(uint8_t *data);`
+```C++
+bool ASKRmt_PickData(uint8_t *data);
+```
 Picks data and returns true if valid data is received. The received data (3 bytes) will be copied to the data array.    
 
-`int8_t ASKRmt_GetKey(bool isFixCode);`
+```C++
+int8_t ASKRmt_GetKey(bool isFixCode);
+```
 Returns key number if valid data is received, otherwise returns -1. This function will not pick the data.
 
-`int8_t ASKRmt_PickKey(bool isFixCode);`
+```C++
+int8_t ASKRmt_PickKey(bool isFixCode);
+```
 Picks data and returns key number if valid data is received, otherwise returns -1.
 
-`int8_t ASKRmt_GetKeyIfRemoteSaved(void);`
+```C++
+int8_t ASKRmt_GetKeyIfRemoteSaved(void);
+```
 Returns key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1. This function will not pick the data.
 
-`int8_t ASKRmt_PickKeyIfRemoteSaved(void);`
+```C++
+int8_t ASKRmt_PickKeyIfRemoteSaved(void);
+```
 Picks data and returns key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1.
 
-`bool ASKRmt_SaveRemote(bool isFixCode);`
+```C++
+bool ASKRmt_SaveRemote(bool isFixCode);
+```
 Saves the remote control code to the EEPROM if valid data is received. This function returns false if no valid data is received or the code is already saved or EEPROM is full. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process. This function will not pick the data.
 
-`bool ASKRmt_PickDataAndSaveRemote(bool isFixCode);`
+```C++
+bool ASKRmt_PickDataAndSaveRemote(bool isFixCode);
+```
 Picks data and saves the remote control code to the EEPROM if valid data is received. This function returns false if no valid data is received or the code is already saved or EEPROM is full. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process.
 
-`bool ASKRmt_SaveRemoteAutoDetectType(void);`
-Saves the remote control code to the EEPROM if valid data is received. Type of the remote control will be detected automatically. The user must only press key 1 or A. This function returns false if no valid data is received or the code is already saved or EEPROM is full or type detection fails due to pressing another key. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process. This function will not pick the data.
+```C++
+bool ASKRmt_SaveRemoteAutoDetectType(void);
+```
+Saves the remote control code to the EEPROM if valid data is received. Type of remote control will be detected automatically. The user must only press key 1 or A. This function returns false if no valid data is received or the code is already saved or EEPROM is full or type detection fails due to pressing another key. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process. This function will not pick the data.
 
-`bool ASKRmt_PickDataAndSaveRemoteAutoDetectType(void);`
-Picks data and saves the remote control code to the EEPROM if valid data is received. Type of the remote control will be detected automatically. The user must only press key 1 or A. This function returns false if no valid data is received or the code is already saved or EEPROM is full or type detection fails due to pressing another key. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process.
+```C++
+bool ASKRmt_PickDataAndSaveRemoteAutoDetectType(void);
+```
+Picks data and saves the remote control code to the EEPROM if valid data is received. Type of remote control will be detected automatically. The user must only press key 1 or A. This function returns false if no valid data is received or the code is already saved or EEPROM is full or type detection fails due to pressing another key. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process.
 
-`bool ASKRmt_DeleteRemote(void);`
-Deletes the remote control code from the EEPROM if valid data is received. Type of the remote control will be detected automatically. This function returns false if no valid data is received or the code does not exist in the EEPROM. This function will not pick the data.
+```C++
+bool ASKRmt_DeleteRemote(void);
+```
+Deletes the remote control code from the EEPROM if valid data is received. Type of remote control will be detected automatically. This function returns false if no valid data is received or the code does not exist in the EEPROM. This function will not pick the data.
 
-`bool ASKRmt_PickDataAndDeleteRemote(void);`
-Picks data and deletes the remote control code from the EEPROM if valid data is received. Type of the remote control will be detected automatically. This function returns false if no valid data is received or the code does not exist in the EEPROM.
+```C++
+bool ASKRmt_PickDataAndDeleteRemote(void);
+```
+Picks data and deletes the remote control code from the EEPROM if valid data is received. Type of remote control will be detected automatically. This function returns false if no valid data is received or the code does not exist in the EEPROM.
 
-`bool ASKRmt_DeleteRemoteByCode(uint8_t *code);`
-Deletes the remote control code from the EEPROM. Type of the remote control will be detected automatically.
+```C++
+bool ASKRmt_DeleteRemoteByCode(uint8_t *code);
+```
+Deletes the remote control code from the EEPROM. Type of remote control will be detected automatically.
 
-`void ASKRmt_DeleteAllRemotes(void);`
+```C++
+void ASKRmt_DeleteAllRemotes(void);
+```
 Deletes all of the remote controls codes from the EEPROM.
 
-`bool ASKRmt_GetRemoteCodeByIndex(uint8_t index, uint8_t *code);`
+```C++
+bool ASKRmt_GetRemoteCodeByIndex(uint8_t index, uint8_t *code);
+```
 This function reads remote control code from the EEPROM and copies 3 bytes of code to the code array. 
 
 ## Test Project
@@ -99,13 +136,14 @@ I made a simple circuit to test this program.
 ![ASK Remote Controls Decoder](Test%20Circuit/ASKRmtCntrlDcdr_bb.png)
 ![ASK Remote Controls Decoder](Test%20Circuit/ASKRmtCntrlDcdr_schem.png)
 The microcontroller is configured to run by 1MHz internal RC oscillator.
+
 The *Test Project* works in 4 modes:
 
-**1. Normal mode (PB0:H, PB1:H, PB2:H) [LED of PB3 is off]:** When pressing any key on the remote control, the data will be sent to the UART and if the remote control has already saved, the key code will be displayed by LEDs on pins PC0 to PC3.
+  **1. Normal mode (PB0:H, PB1:H, PB2:H) [LED of PB3 is off]:** When pressing any key on the remote control, the data will be sent to the UART and if the remote control has already saved, the key code will be displayed by LEDs on pins PC0 to PC3.
 
-**2. Add mode (PB0:L, PB1:H, PB2:H) [LED of PB3 is on]:** The remote control will be saved by pressing key 1 or A. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART and the key code will be displayed by LEDs on pins PC0 to PC3.
+  **2. Add mode (PB0:L, PB1:H, PB2:H) [LED of PB3 is on]:** The remote control will be saved by pressing key 1 or A. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART and the key code will be displayed by LEDs on pins PC0 to PC3.
 
-**3. Remove mode (PB0:H, PB1:L, PB2:H) [LED of PB3 is blinking]:** The remote control will be removed by pressing any key. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART.
+  **3. Remove mode (PB0:H, PB1:L, PB2:H) [LED of PB3 is blinking]:** The remote control will be removed by pressing any key. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART.
 
-**4. Delete All mode (PB0: H, PB1: H , PB2: L):** All saved remote controls will be removed by making PB2 low for a short time. After a successful operation LED on PB3 will blink fast 10 times.
+  **4. Delete All mode (PB0: H, PB1: H , PB2: L):** All saved remote controls will be removed by making PB2 low for a short time. After a successful operation LED on PB3 will blink fast 10 times.
 Modes 1-3 can be selected by 2 switches. Mode 4 is just a momentary mode.
