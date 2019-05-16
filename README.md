@@ -2,7 +2,7 @@
 This project is a C++ program written in Atmel Studio environment and compiled by GCC for ATmega8A microcontroller to decode common FixCode and LearningCode ASK RF remote controls signals. These remote controls usually encode data using PT2262, EV1527, HS1527, or RT1527 ICs. This program contains functions to read received data, extract key code, save the remote control to the EEPROM and etc. It is very useful for making a receiver circuit.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Author
 * **Mohammad Yousefi** - *Initial work* - [vahidyou](https://github.com/vahidyou)
@@ -28,7 +28,7 @@ Don't forget to enable global interrupts by setting the `I` bit of the `SREG`.
 ```C++
 sei();
 ```
-Open the file *ASKRemoteControlDecoder.h* and adjust the value of TCCR1B register for starting the Timer1. It is better to run the timer at 1MHz. The default value is 1.
+Open the file *ASKRemoteControlDecoder.h* and adjust the value of TCCR1B register for starting the Timer1. It is better to run the timer at 1MHz. The default value is 1 (no prescaling).
 ```C++
 #define ASKRmt_TCCR1B 1
 ```
@@ -39,7 +39,7 @@ Open the file *ASKRemoteControlDecoder.h* and adjust EEPROM start and end positi
 ```
 
 ## Variables and Functions
-Variables and functions of the library start with `ASKRmt_`. Some function will pick or discard the received data and some not. Note that while data is not picked or discarded, new data will not receive.
+Variables and functions of this library start with `ASKRmt_` prefix. Some function will pick or discard the received data and some not. Note that while data is not picked or discarded, new data will not receive.
 
 ```C++
 extern volatile bool ASKRmt_AutoDiscardUnsavedRemotes;
@@ -54,57 +54,57 @@ Returns true if valid data is received. This function will not pick the data.
 ```C++
 void ASKRmt_DiscardData(void);
 ```
-Discards received data.
+Discards the received data.
 
 ```C++
 bool ASKRmt_GetData(uint8_t *data);
 ```
-Reads data and returns true if valid data is received. The received data (3 bytes) will be copied to the data array. This function will not pick the data.
+Reads the data and returns true if valid data is received. The received data (3 bytes) will be copied to the *data* array. This function will not pick the data.
 
 ```C++
 bool ASKRmt_PickData(uint8_t *data);
 ```
-Picks data and returns true if valid data is received. The received data (3 bytes) will be copied to the data array.    
+Picks the data and returns true if valid data is received. The received data (3 bytes) will be copied to the *data* array.    
 
 ```C++
 int8_t ASKRmt_GetKey(bool isFixCode);
 ```
-Returns key number if valid data is received, otherwise returns -1. This function will not pick the data.
+Returns the key number if valid data is received, otherwise returns -1. This function will not pick the data.
 
 ```C++
 int8_t ASKRmt_PickKey(bool isFixCode);
 ```
-Picks data and returns key number if valid data is received, otherwise returns -1.
+Picks the data and returns the key number if valid data is received, otherwise returns -1.
 
 ```C++
 int8_t ASKRmt_GetKeyIfRemoteSaved(void);
 ```
-Returns key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1. This function will not pick the data.
+Returns the key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1. This function will not pick the data.
 
 ```C++
 int8_t ASKRmt_PickKeyIfRemoteSaved(void);
 ```
-Picks data and returns key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1.
+Picks the data and returns the key number if valid data is received and remote control code has been saved to the EEPROM, otherwise returns -1.
 
 ```C++
 bool ASKRmt_SaveRemote(bool isFixCode);
 ```
-Saves the remote control code to the EEPROM if valid data is received. This function returns false if no valid data is received or the code is already saved or EEPROM is full. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process. This function will not pick the data.
+Saves the remote control code to the EEPROM if valid data is received. This function returns false if no valid data is received or the code is already saved or the EEPROM is full. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process. This function will not pick the data.
 
 ```C++
 bool ASKRmt_PickDataAndSaveRemote(bool isFixCode);
 ```
-Picks data and saves the remote control code to the EEPROM if valid data is received. This function returns false if no valid data is received or the code is already saved or EEPROM is full. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process.
+Picks the data and saves the remote control code to the EEPROM if valid data is received. This function returns false if no valid data is received or the code is already saved or the EEPROM is full. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process.
 
 ```C++
 bool ASKRmt_SaveRemoteAutoDetectType(void);
 ```
-Saves the remote control code to the EEPROM if valid data is received. Type of remote control will be detected automatically. The user must only press key 1 or A. This function returns false if no valid data is received or the code is already saved or EEPROM is full or type detection fails due to pressing another key. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process. This function will not pick the data.
+Saves the remote control code to the EEPROM if valid data is received. Type of remote control will be detected automatically. The user must only press key 1 or A. This function returns false if no valid data is received or the code is already saved or the EEPROM is full or type detection fails due to pressing another key. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process. This function will not pick the data.
 
 ```C++
 bool ASKRmt_PickDataAndSaveRemoteAutoDetectType(void);
 ```
-Picks data and saves the remote control code to the EEPROM if valid data is received. Type of remote control will be detected automatically. The user must only press key 1 or A. This function returns false if no valid data is received or the code is already saved or EEPROM is full or type detection fails due to pressing another key. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process.
+Picks the data and saves the remote control code to the EEPROM if valid data is received. Type of remote control will be detected automatically. The user must only press key 1 or A. This function returns false if no valid data is received or the code is already saved or the EEPROM is full or type detection fails due to pressing another key. You must assign false to ASKRmt_AutoDiscardUnsavedRemotes before saving process.
 
 ```C++
 bool ASKRmt_DeleteRemote(void);
@@ -114,12 +114,12 @@ Deletes the remote control code from the EEPROM if valid data is received. Type 
 ```C++
 bool ASKRmt_PickDataAndDeleteRemote(void);
 ```
-Picks data and deletes the remote control code from the EEPROM if valid data is received. Type of remote control will be detected automatically. This function returns false if no valid data is received or the code does not exist in the EEPROM.
+Picks the data and deletes the remote control code from the EEPROM if valid data is received. Type of remote control will be detected automatically. This function returns false if no valid data is received or the code does not exist in the EEPROM.
 
 ```C++
 bool ASKRmt_DeleteRemoteByCode(uint8_t *code);
 ```
-Deletes the remote control code from the EEPROM. Type of remote control will be detected automatically.
+Deletes the remote control code from the EEPROM. Type of remote control will be detected automatically. *code* is pointer to array of 3 bytes.
 
 ```C++
 void ASKRmt_DeleteAllRemotes(void);
@@ -129,7 +129,7 @@ Deletes all of the remote controls codes from the EEPROM.
 ```C++
 bool ASKRmt_GetRemoteCodeByIndex(uint8_t index, uint8_t *code);
 ```
-This function reads remote control code from the EEPROM and copies 3 bytes of code to the code array. 
+This function reads remote control code from the EEPROM and copies 3 bytes of code to the *code* array. 
 
 ## Test Project
 I made a simple circuit to test this program.
