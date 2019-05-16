@@ -2,13 +2,13 @@
  * ASKRmtCtrlDcdr.cpp
  *  ASK remote controls signal decoder test project. FixCode and LearningCode remote controls are supported.
  *  Operation modes:
- *   Normal mode (PB0:H, PB1: H, PB2:H) [LED of PB3 is off]: When pressing any key on the remote control, the data 
+ *   Normal mode (PB0:H, PB1:H, PB2:H) [LED on PB3 is off]: When pressing any key on the remote control, the data 
  *    will be sent to the UART and if the remote control has already saved, the key code will be displayed by LEDs 
  *    on pins PC0 to PC3.
- *   Add mode (PB0:L, PB1: H, PB2:H) [LED of PB3 is on]: The remote control will be saved by pressing key 1 or A.
+ *   Add mode (PB0:L, PB1:H, PB2:H) [LED on PB3 is on]: The remote control will be saved by pressing key 1 or A.
  *    After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART and the 
  *    key code will be displayed by LEDs on pins PC0 to PC3.
- *   Remove mode (PB0:H, PB1: L, PB2:H) [LED of PB3 is blinking]: The remote control will be removed by pressing
+ *   Remove mode (PB0:H, PB1:L, PB2:H) [LED on PB3 is blinking]: The remote control will be removed by pressing
  *    any key. After a successful operation LED on PB3 will blink fast 10 times. The data will be sent to the UART.  
  *   Delete All mode (PB0:H, PB1:H , PB2:L): All saved remote controls will be removed by making PB2 low for a 
  *    short time. After a successful operation LED on PB3 will blink fast 10 times.
@@ -20,7 +20,7 @@
  *
  *   Created: 5 May 2019 1:02 AM
  *    Author: Mohammad Yousefi (www.dihav.com - mohammad-yousefi.id.ir - vahidyou@gmail.com)
- * Last Edit: 10 May 2019
+ * Last Edit: 16 May 2019
  */ 
 
 #define F_CPU 1000000UL

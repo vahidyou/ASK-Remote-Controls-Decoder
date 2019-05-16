@@ -9,7 +9,7 @@
  *
  *   Created: 7 May 2019 1:27 AM
  *    Author: Mohammad Yousefi (www.dihav.com - mohammad-yousefi.id.ir - vahidyou@gmail.com)
- * Last Edit: 10 May 2019
+ * Last Edit: 16 May 2019
  */
 
 #include <avr/interrupt.h>
@@ -75,7 +75,7 @@ ISR(INT0_vect)
 			else
 				BitIndex = 253;
 		}
-		if (254 == BitIndex) TCCR1B = 1; // start timer1 with no prescaling
+		if (254 == BitIndex) TCCR1B = ASKRmt_TCCR1B; // start Timer1
 		BitIndex++;	
 		if (24 == BitIndex) // if 24 bits received
 		{
@@ -93,8 +93,9 @@ ISR(INT0_vect)
 }
 
 ISR(TIMER1_OVF_vect)
-{
-	TCCR1B = 0; // stop timer1 after about 65 milliseconds of no signal
+{	
+	TCCR1B = 0; // stop Timer1 after about 65 milliseconds of no signal 
+	// This code will never executes when the ASK receiver module is on.
 }
 
 bool ASKRmt_IsDataReceived(void)
