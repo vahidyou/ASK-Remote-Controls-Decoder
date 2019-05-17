@@ -15,7 +15,7 @@
  *
  * This program is published under the terms of the MIT License.
  * This program is free software and can be distributed by everyone.
- * You can modify this program and distribute it by your name and contact information as the author.
+ * You can modify this program and distribute it with your name and contact information as the author.
  * No warranty of any kind is expressed or implied. You use this program at your own risk.
  *
  *   Created: 5 May 2019 1:02 AM
