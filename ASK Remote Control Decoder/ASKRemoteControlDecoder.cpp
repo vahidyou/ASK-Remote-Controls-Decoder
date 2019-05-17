@@ -9,7 +9,7 @@
  *
  *   Created: 7 May 2019 1:27 AM
  *    Author: Mohammad Yousefi (www.dihav.com - mohammad-yousefi.id.ir - vahidyou@gmail.com)
- * Last Edit: 16 May 2019
+ * Last Edit: 17 May 2019
  */
 
 #include <avr/interrupt.h>
@@ -94,8 +94,10 @@ ISR(INT0_vect)
 
 ISR(TIMER1_OVF_vect)
 {	
-	TCCR1B = 0; // stop Timer1 after about 65 milliseconds of no signal 
-	// This code will never executes when the ASK receiver module is on.
+	// stop Timer1 and reset bit counter after about 65 milliseconds of no signal
+	// This part will never executes when the ASK receiver module is on. Because there is a lot of RF noise.
+	TCCR1B = 0; 	
+	BitIndex = 254;
 }
 
 bool ASKRmt_IsDataReceived(void)
