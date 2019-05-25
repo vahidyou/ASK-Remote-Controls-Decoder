@@ -30,7 +30,7 @@
 #include <avr/interrupt.h>
 #include "../ASK Remote Control Decoder/ASKRemoteControlDecoder.h"
 
-void UART_TX(unsigned char d)
+void UART_TX(uint8_t d)
 {
 	while (!(UCSRA & (1 << UDRE))) ;
 	UDR = d;
@@ -62,7 +62,7 @@ int main(void)
 	UCSRB = (1 << TXEN);                                // enable TX
 	UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0); // select 8-bit data
 	
-	unsigned char dataASK[3];
+	uint8_t dataASK[3];
 	ASKRmt_AutoDiscardUnsavedRemotes = false;
 	
 	sei();
