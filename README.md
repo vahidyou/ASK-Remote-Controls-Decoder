@@ -14,6 +14,18 @@ Include *ASKRemoteControlDecoder.h* to your program.
 ```C++
 #include "PATH/ASKRemoteControlDecoder.h"
 ```
+Call `ASKRmt_ExternalInterrupt0_ISR` and `ASKRmt_Timer1Overflow_ISR` on ISRs.
+```C++
+ISR(INT0_vect)
+{
+	ASKRmt_ExternalInterrupt0_ISR();
+}
+
+ISR(TIMER1_OVF_vect)
+{
+	ASKRmt_Timer1Overflow_ISR();
+}
+```
 The program uses INT0 extrenal interrupt pin as the input pin for the signals. So you must configure this pin as input and INT0 interrupt for both raising and falling edges.
 ```C++
 DDRD  = 0bxxxxx0xx;
@@ -45,6 +57,16 @@ Variables and functions of this library start with `ASKRmt_` prefix. Some functi
 extern volatile bool ASKRmt_AutoDiscardUnsavedRemotes;
 ```
 If this variable is true and the received data remote control code is not saved to the EEPROM, the data will be discarded automatically. The default value is true.
+
+```C++
+void ASKRmt_ExternalInterrupt0_ISR(void);
+```
+Call this subroutine on any change of INT0 pin. ISR(INT0_vect)
+
+```C++
+void ASKRmt_Timer1Overflow_ISR(void);
+```
+Call this subroutine on Timer1 overflow interrupt. ISR(TIMER1_OVF_vect)
 
 ```C++
 bool ASKRmt_IsDataReceived(void);
