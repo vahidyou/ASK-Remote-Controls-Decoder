@@ -9,15 +9,14 @@
  *
  *   Created: 9 May 2019 1:57:43 AM
  *    Author: Mohammad Yousefi (www.dihav.com - mohammad-yousefi.id.ir - vahidyou@gmail.com)
- * Last Edit: 16 May 2019
+ * Last Edit: 29 May 2019
  */ 
 
 #ifndef ASKRemoteControlDecoder_H_
 #define ASKRemoteControlDecoder_H_
 
 /* You must define the value of TCCR1B register for running Timer1 at 1MHz. The default 
-   value for 1MHz internal RC oscillator is 1 that starts Timer1 with no prescaling.
-*/
+   value for 1MHz internal RC oscillator is 1 that starts Timer1 with no prescaling. */
 #define ASKRmt_TCCR1B 1
 
 /* You must define EEPROM start address and end address for saving remote controls codes.
@@ -26,8 +25,14 @@
 #define ASKRmt_EEPROM_END  59
 
 /* If this variable is true and the received data remote control code is not saved to
-   the EEPROM, the data will be discarded automatically. The default value is true.*/
+   the EEPROM, the data will be discarded automatically. The default value is true. */
 extern volatile bool ASKRmt_AutoDiscardUnsavedRemotes;
+
+/* Call this subroutine on any change of INT0 pin. ISR(INT0_vect) */
+void ASKRmt_ExternalInterrupt0_ISR(void);
+
+/* Call this subroutine on Timer1 overflow interrupt. ISR(TIMER1_OVF_vect) */
+void ASKRmt_Timer1Overflow_ISR(void);
 
 /* Returns true if valid data is received.
    This function will not pick the data. 

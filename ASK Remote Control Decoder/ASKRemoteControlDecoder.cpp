@@ -12,7 +12,7 @@
  * Last Edit: 17 May 2019
  */
 
-#include <avr/interrupt.h>
+#include <avr/io.h>
 #include <avr/cpufunc.h>
 #include <avr/eeprom.h>
 #include "ASKRemoteControlDecoder.h"
@@ -43,7 +43,7 @@ bool CheckIsRemoteSaved(void)
 	return false;
 }
 
-ISR(INT0_vect)
+void ASKRmt_ExternalInterrupt0_ISR(void)
 {
 	// discard signal if there is unread data
 	if (DataReceived) return;
@@ -92,7 +92,7 @@ ISR(INT0_vect)
 		HighTime = tim;
 }
 
-ISR(TIMER1_OVF_vect)
+void ASKRmt_Timer1Overflow_ISR(void)
 {	
 	// stop Timer1 and reset bit counter after about 65 milliseconds of no signal
 	// This part will never executes when the ASK receiver module is on. Because there is a lot of RF noise.
