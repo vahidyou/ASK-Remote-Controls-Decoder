@@ -20,7 +20,7 @@
  *
  *   Created: 5 May 2019 1:02 AM
  *    Author: Mohammad Yousefi (www.dihav.com - mohammad-yousefi.id.ir - vahidyou@gmail.com)
- * Last Edit: 25 May 2019
+ * Last Edit: 29 May 2019
  */ 
 
 #define F_CPU 1000000UL
@@ -29,6 +29,16 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include "../ASK Remote Control Decoder/ASKRemoteControlDecoder.h"
+
+ISR(INT0_vect)
+{
+	ASKRmt_ExternalInterrupt0_ISR();
+}
+
+ISR(TIMER1_OVF_vect)
+{
+	ASKRmt_Timer1Overflow_ISR();
+}
 
 void UART_TX(uint8_t d)
 {
@@ -53,7 +63,7 @@ int main(void)
 	PORTB = 0b00000111; // enable inputs pull-ups
 	DDRC  = 0b111111;   // all output
 	DDRD  = 0b11111011; // INT0 input for ASK, others output
-	// ASK configurations
+	// interrupts configurations
 	MCUCR = (1 << ISC00); // select both edges for INT0
 	GICR  = (1 << INT0);  // enable INT0 interrupt
 	TIMSK = (1 << TOIE1); // enable timer1 overflow interrupt
